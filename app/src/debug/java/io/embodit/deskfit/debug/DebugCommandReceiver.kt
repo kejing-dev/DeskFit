@@ -37,7 +37,7 @@ import java.util.Locale
  * | trigger  |                                | one press of the synthetic ray |
  * | stick    | --ef x -1..1                   | synthetic thumbstick X (turns the bar); 0 releases |
  * | dump     |                                | `DUMP {json}` |
- * | pose / planes / panels / fps (--ez on) |  | read-backs |
+ * | pose / planes / panels / colliders / fps (--ez on) |  | read-backs (`colliders`: surface tap targets and whether they are live) |
  *
  * Numbers may also be passed as `--es a "<value>"`.
  */
@@ -97,6 +97,7 @@ class DebugCommandReceiver : BroadcastReceiver() {
                 "pose" -> DeskLog.i(scene?.poseLine() ?: NO_SCENE)
                 "planes" -> (scene?.planeLines() ?: listOf(NO_SCENE)).forEach { DeskLog.i(it) }
                 "panels" -> (scene?.panelLines() ?: listOf(NO_SCENE)).forEach { DeskLog.i(it) }
+                "colliders" -> DeskLog.i(scene?.collidersLine() ?: NO_SCENE)
                 "fps" -> DeskLog.i(scene?.setFps(on()) ?: NO_SCENE)
                 else -> DeskLog.i("CMD unknown '$cmd'")
             }

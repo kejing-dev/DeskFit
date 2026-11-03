@@ -44,6 +44,10 @@ on the pole (green target band, target line, eye tick, tape) and at the desk edg
   and `SnackbarHost` do nothing in a Stage (Spatial Ruler finding).
 - Heights: the FLOOR plane under the head is the zero point (never the Stage origin). `DeskUiState` stores absolute Stage y for 3D
   things (`barY`, `forearmY`, `desk.topY`) and `floorY`; rules get heights above the floor. `deskH` / edge lock when S6 is entered.
+- Surface tap targets (QA q1-1 / profile D24): `PlaneColliders` builds a thin box only for TABLE planes and keeps them
+  **disabled** except in S6 with an automatic desk (`DeskScene.onFrame` sets `colliders.active`); the manual plane's touch box
+  exists only in S11b / S6-manual. So a panel standing in front of (or inside) a real wall or cabinet always gets the pointer.
+  The backstop shell (9 m) stays. `cmd colliders` prints what exists and whether it is live.
 - Every start has a stop: trackers in `DeskScene.attach` / `detach`, panels released before the root is destroyed, shared
   resources (`toGlobal`) closed in `detach`.
 - Factory default interaction D1: thumbstick X turns the bar on the pole about the pole's vertical axis (90°/s, dead zone 0.2),
@@ -90,7 +94,7 @@ adb -s emulator-5554 shell "am broadcast -a io.embodit.deskfit.DEBUG -p io.embod
 | `lang` / `unit` | `--es id zh\|en\|system` / `cm\|in` | settings |
 | `ui` | `--es id primary\|secondary\|back\|more\|menu_restart\|menu_exit\|lang_zh\|unit_in\|blocked_retry\|blocked_exit` | press a control |
 | `pointer` / `trigger` / `stick` | `--es a "ox,oy,oz,dx,dy,dz"` / — / `--ef x 0.8` | synthetic ray (desk reticle), its press, thumbstick |
-| `dump` / `pose` / `planes` / `panels` / `fps` | | read-backs (`DUMP {json}`) |
+| `dump` / `pose` / `planes` / `panels` / `colliders` / `fps` | | read-backs (`DUMP {json}`; `COLLIDERS n= active=`) |
 
 Screenshot checklist (QA): S1 right after launch · S2 before planes · S3 (`state S3`, flash) · S17 (after one result) · S4 / S5 /
 S12 with hold · S6 (`state S6`, arcs + reticle via `pointer`) · S7 (`state S7`) · S8 · S9 (`state S9`) · S10 (`state S10`) ·
@@ -112,6 +116,13 @@ JAVA_HOME = `~/.pico/primer-cli/jdk/jdk-21.0.12.1+1/Contents/Home`, `local.prope
 `STATE <id>` · `PLANES add|n=` · `DESK manual …` · `EYE sampled|unstable|posture` · `POLE up` · `TAP plane|manualPlane|ghost|elsewhere|ray|ignored` ·
 `DRAG start|move|end` · `BAR <kind> y=` · `RESULT eye= desk= forearm= top= dist= side= chair= screen= distDelta= off= allGood=` ·
 `TRACK lost|recovered|hmd|controller` · `BLOCKED reason=` · `SETTINGS` · `UI <control>` · `CMD recv` · `PANEL follow` · `SCENE attached|detached`.
+
+## Rework log
+
+- Round 1 (QA #1 q1-1): plane colliders were built for every plane and always live, so a panel in front of a wall lost the press.
+  Now TABLE-only and live only in S6 (auto desk). Also fixed: manual edge line used the wrong mesh (k1), grid / pole / forearm
+  roots were never disabled at start (k2), S2 spinner (k3), `hold` now freezes the ring and the snackbar timer (k4), blocked
+  dialog's Chinese Retry (k5), S17 last-result line typography (k6). Panel presses log `UI <name>`.
 
 ## Known limits (v0.1.0)
 

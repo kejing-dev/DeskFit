@@ -282,7 +282,7 @@ class DeskScene(private val sink: (DeskEvent) -> Unit, private val frameHook: (L
         yield()
         forearm = ForearmView(root, poleMeshes, m, tapes)
         yield()
-        manual = ManualDesk(root, shared, m, poleMeshes)
+        manual = ManualDesk(root, shared, m, poleMeshes, tapes.band)
         yield()
         reticle = DeskReticle(root, shared, m)
         repeat(4) { flashStrips += Strip(root, tapes.band, m.flash, "flash$it") }
@@ -420,6 +420,8 @@ class DeskScene(private val sink: (DeskEvent) -> Unit, private val frameHook: (L
         if (!attached) return
         val state = ui
         frameHook(now)
+        // q1-1: surface colliders only take the pointer while a desk tap is wanted; otherwise a panel in front of a wall gets it
+        colliders?.active = state.phase == Phase.MARK_SCREEN && !state.manualDesk && !state.menuOpen
         pollTracking(now)
         pollBlock()
         pollPlanes(now)
@@ -472,13 +474,17 @@ class DeskScene(private val sink: (DeskEvent) -> Unit, private val frameHook: (L
     /** S4: head-pose samples for 1.4 s, then the pure evaluation; the ring only shows progress. */
     private fun sampleEye(state: DeskUiState, now: Long) {
         if (state.phase != Phase.SAMPLING) return
-        if (state.hold) return
-        val floorY = rules.floorY(planeTracker.all, head.position) ?: state.floorY ?: return
-        if (ringAt == null) {
+        if (ringAt == null && hasHead) {
             val f = head.forwardFlat
             ringAt = head.position + f * RING_DISTANCE_M
             ringRotation = Quat4.fromTo(Vec3.UP, (head.position - ringAt!!).normalized())
         }
+        if (state.hold) {
+            // QA hold: the ring stands at a third of its fill, nothing is sampled
+            ringProgress = 0.35f
+            return
+        }
+        val floorY = rules.floorY(planeTracker.all, head.position) ?: state.floorY ?: return
         if (hasHead) samples += EyeSample(now, head.position, floorY)
         val elapsed = now - state.samplingStartMs
         ringProgress = (elapsed / EyeSampleUseCase.WINDOW_MS.toFloat()).coerceIn(0f, 1f)
@@ -1008,6 +1014,9 @@ class DeskScene(private val sink: (DeskEvent) -> Unit, private val frameHook: (L
     override fun panelLines(): List<String> =
         rig?.all?.map { s -> "PANEL id=${s.id} shown=${s.shown} pos=${DeskLog.pos(s.position)} scale=${DeskLog.f(s.scale)} engine=${DeskLog.pos(s.enginePosition())}" } ?: emptyList()
 
+    /** QA: the surface tap targets that exist right now and whether they take the pointer. */
+    fun collidersLine(): String = colliders?.describe() ?: "COLLIDERS none"
+
     override fun forceTrackingLost(lost: Boolean): String {
         headTracker.forceLost = lost
         return "TRACK force lost=$lost"
@@ -1121,7 +1130,7 @@ internal class SampleRing(private val parent: Entity, private val shared: Shared
         track = ModelEntity(trackMesh, materials.ringTrack).also { root.addChild(it) }
         val piece = shared.keep(MeshFactory.sector(INNER_M, OUTER_M, (PI / PIECES).toFloat(), "ring_piece"))
         for (i in 0 until PIECES) {
-            val e = ModelEntity(piece, materials.yellow)
+            val e = ModelEntity(piece, materials.yellowTwoSided)
             // clockwise as seen from the viewer: the ring's +Y points at the head, so turn by -i steps
             e.setLocal(rotation = Quat4.axisAngle(Vec3.UP, -(2f * PI.toFloat() / PIECES) * i + PI.toFloat() / 2f))
             root.addChild(e)
@@ -1281,6 +1290,7 @@ internal class PoleView(parent: Entity, name: String, private val meshes: Meshes
         markPivot.addChild(tickR)
         markPivot.addChild(faintL)
         markPivot.addChild(faintR)
+        root.enabled = false
         hide()
     }
 
@@ -1401,6 +1411,7 @@ internal class ForearmView(parent: Entity, meshes: PoleView.Meshes, private val 
         group.addChild(bar)
         bar.setLocal(scale = Vec3(LEN, 2.5f, 1.6f))
         touch = touchBox(group, "forearm", Vec3(LEN, 0.06f, 0.03f))
+        root.enabled = false
         hide()
     }
 
@@ -1455,7 +1466,7 @@ internal class ForearmView(parent: Entity, meshes: PoleView.Meshes, private val 
 }
 
 /** S11: the 60 x 40 cm glass plate (a), the dashed grid plane with its tap target (b) and the yellow edge line. */
-internal class ManualDesk(parent: Entity, shared: SharedResources, private val materials: SceneMaterials, meshes: PoleView.Meshes) {
+internal class ManualDesk(parent: Entity, shared: SharedResources, private val materials: SceneMaterials, meshes: PoleView.Meshes, unitBand: MeshResource) {
     private val plateRoot = Entity()
     private val plate = ModelEntity(meshes.plate, materials.plateGlass)
     private val edges = ArrayList<Entity>()
@@ -1463,7 +1474,7 @@ internal class ManualDesk(parent: Entity, shared: SharedResources, private val m
     private val gridRoot = Entity()
     private val gridStrips = ArrayList<Entity>()
     private val gridTouch: Entity
-    private val edgeLine = Strip(parent, meshes.band, materials.yellow, "manualEdge")
+    private val edgeLine = Strip(parent, unitBand, materials.yellowTwoSided, "manualEdge")
     private var plateOn = false
     private var gridOn = false
 
@@ -1498,6 +1509,8 @@ internal class ManualDesk(parent: Entity, shared: SharedResources, private val m
             gridStrips += b
         }
         gridTouch = touchBox(gridRoot, "manualPlane", Vec3(span, 0.006f, span))
+        plateRoot.enabled = false
+        gridRoot.enabled = false
         hide()
     }
 

@@ -35,6 +35,7 @@
     <string name="action_next">下一步</string>
     <string name="action_again">再量一次</string>
     <string name="action_retry">重量</string>
+    <string name="action_retry_blocked">重试</string>
     <string name="action_keep">就是这样</string>
     <string name="action_continue">继续</string>
     <string name="action_wrong_desk">桌子不对</string>

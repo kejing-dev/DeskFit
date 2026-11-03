@@ -135,8 +135,11 @@ private fun Pictogram(state: DeskUiState) {
         when (state.phase) {
             Phase.STARTING -> CircularProgressIndicator(modifier = Modifier.size(40.dp), color = ink, progressSize = CircularProgressDefaults.circleProgressSize(40.dp))
             Phase.SCANNING -> {
-                Icon(painter = painterResource(R.drawable.pg_look_desk), contentDescription = null, modifier = Modifier.size(96.dp).alpha(0.6f), tint = ink)
-                CircularProgressIndicator(modifier = Modifier.size(28.dp), color = ink, progressSize = CircularProgressDefaults.circleProgressSize(28.dp))
+                Icon(painter = painterResource(R.drawable.pg_look_desk), contentDescription = null, modifier = Modifier.size(96.dp).alpha(0.5f), tint = ink)
+                // the spinner sits in the corner of the pictogram, at the size that is known to draw (S1 uses 40 dp)
+                Box(modifier = Modifier.size(96.dp), contentAlignment = Alignment.BottomEnd) {
+                    CircularProgressIndicator(modifier = Modifier.size(40.dp), color = ink, progressSize = CircularProgressDefaults.circleProgressSize(40.dp))
+                }
             }
             else -> {
                 val res =
@@ -184,9 +187,11 @@ private fun StepCopy(state: DeskUiState, modifier: Modifier) {
             Phase.FOREARM -> rs(R.string.hint_forearm)
             else -> null
         }
+    val lastLine = (state.phase == Phase.SIT || state.phase == Phase.UNSTABLE) && state.lastResult != null
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Text(text = copy, color = ink, style = DeskType.title, maxLines = 2, overflow = TextOverflow.Ellipsis)
-        if (hint != null) Text(text = hint, color = ink, style = DeskType.hint, maxLines = 2, overflow = TextOverflow.Ellipsis)
+        // the "last time" line (S17) is figures-dense: labelLarge keeps it on two balanced lines
+        if (hint != null) Text(text = hint, color = ink, style = if (lastLine) DeskType.label else DeskType.hint, maxLines = 2, overflow = TextOverflow.Ellipsis)
         // factory default interaction D1: the thumbstick turns the bar on the pole
         if (state.phase == Phase.ALIGN_TOP) Text(text = rs(R.string.hint_joystick), color = ink, style = PicoTheme.typography.labelLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
@@ -196,9 +201,9 @@ private fun StepCopy(state: DeskUiState, modifier: Modifier) {
 @Composable
 private fun lastSummary(last: io.embodit.deskfit.domain.model.SavedResult, state: DeskUiState): String {
     fun arrow(d: Float) = if (d > 0f) "↑" else "↓"
-    val chair = if (last.chairDelta == 0f) "${rs(R.string.summary_chair)} ${rs(R.string.summary_ok)}" else "${rs(R.string.summary_chair)} ${arrow(last.chairDelta)}${format.delta(last.chairDelta, state.unit)}"
-    val screen = if (last.screenDelta == 0f) "${rs(R.string.summary_screen)} ${rs(R.string.summary_ok)}" else "${rs(R.string.summary_screen)} ${arrow(last.screenDelta)}${format.delta(last.screenDelta, state.unit)}"
-    val dist = if (last.distanceDelta == 0f) "${rs(R.string.summary_distance)} ${rs(R.string.summary_ok)}" else "${rs(R.string.summary_distance)} ${if (last.distanceDelta > 0f) "→" else "←"}${format.delta(last.distanceDelta, state.unit)}"
+    val chair = if (last.chairDelta == 0f) "${rs(R.string.summary_chair)} ${rs(R.string.summary_ok)}" else "${rs(R.string.summary_chair)}${arrow(last.chairDelta)}${format.delta(last.chairDelta, state.unit)}"
+    val screen = if (last.screenDelta == 0f) "${rs(R.string.summary_screen)} ${rs(R.string.summary_ok)}" else "${rs(R.string.summary_screen)}${arrow(last.screenDelta)}${format.delta(last.screenDelta, state.unit)}"
+    val dist = if (last.distanceDelta == 0f) "${rs(R.string.summary_distance)} ${rs(R.string.summary_ok)}" else "${rs(R.string.summary_distance)}${if (last.distanceDelta > 0f) "→" else "←"}${format.delta(last.distanceDelta, state.unit)}"
     return "$chair · $screen · $dist"
 }
 

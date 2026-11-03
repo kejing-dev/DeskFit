@@ -12,7 +12,7 @@ android {
         applicationId = "io.embodit.deskfit"
         minSdk = 35
         targetSdk = 35
-        versionCode = 1
+        versionCode = 2
         versionName = "0.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

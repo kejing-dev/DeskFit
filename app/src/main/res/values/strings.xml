@@ -38,6 +38,7 @@
     <string name="action_next">Next</string>
     <string name="action_again">Measure again</string>
     <string name="action_retry">Retry</string>
+    <string name="action_retry_blocked">Retry</string>
     <string name="action_keep">Keep</string>
     <string name="action_continue">Continue</string>
     <string name="action_wrong_desk">Wrong desk</string>

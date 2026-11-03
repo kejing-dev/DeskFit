@@ -76,7 +76,7 @@ internal fun DialogPanel(blocked: Boolean, onEvent: (DeskEvent) -> Unit) {
             Spacer(modifier = Modifier.weight(1f))
             Row(modifier = Modifier.fillMaxWidth().height(48.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)) {
                 DialogButton("blocked_exit", R.drawable.ic_exit, rs(R.string.action_exit), PicoTheme.colorScheme.fillTertiary, ink) { onEvent(DeskEvent.BlockedExitClicked) }
-                DialogButton("blocked_retry", R.drawable.ic_retry, rs(R.string.action_retry), PicoTheme.colorScheme.interaction, DeskColors.TapeInk) { onEvent(DeskEvent.BlockedRetryClicked) }
+                DialogButton("blocked_retry", R.drawable.ic_retry, rs(R.string.action_retry_blocked), PicoTheme.colorScheme.interaction, DeskColors.TapeInk) { onEvent(DeskEvent.BlockedRetryClicked) }
             }
         }
     }

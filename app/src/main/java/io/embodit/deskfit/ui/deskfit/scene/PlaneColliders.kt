@@ -8,6 +8,7 @@ import com.pico.spatial.core.ecs.resource.ShapeResource
 import com.pico.spatial.core.math.Vector3
 import io.embodit.deskfit.domain.model.PlaneSurface
 import io.embodit.deskfit.domain.model.Quat4
+import io.embodit.deskfit.domain.model.SurfaceKind
 import io.embodit.deskfit.domain.model.Vec3
 import io.embodit.deskfit.platform.DeskLog
 import kotlin.math.abs
@@ -32,6 +33,18 @@ internal class PlaneColliders(private val root: Entity) {
     private val idByEntity = HashMap<Long, String>()
     private var backstop: Entity? = null
 
+    /**
+     * Only the desk-tap states (S6 with an automatic desk) take taps on surfaces (QA q1-1 / profile D24):
+     * at every other time the colliders are disabled so that a panel standing in front of a real wall or
+     * cabinet still gets the pointer. Only TABLE planes get a collider at all (see [upsert]).
+     */
+    var active: Boolean = false
+        set(value) {
+            if (value == field) return
+            field = value
+            colliders.values.forEach { it.entity.enabled = value }
+        }
+
     val count: Int
         get() = colliders.size
 
@@ -41,6 +54,7 @@ internal class PlaneColliders(private val root: Entity) {
     fun isBackstop(entity: Entity): Boolean = runCatching { entity.getName() }.getOrNull()?.startsWith(BACKSTOP) == true
 
     fun upsert(surface: PlaneSurface) {
+        if (surface.kind != SurfaceKind.TABLE) return
         val fit = fit(surface) ?: return
         val existing = colliders[surface.id]
         if (existing == null) {
@@ -51,6 +65,7 @@ internal class PlaneColliders(private val root: Entity) {
             entity.components.set(InteractableComponent())
             root.addChild(entity)
             entity.setLocal(position = fit.center, rotation = fit.rotation)
+            entity.enabled = active
             colliders[surface.id] = Collider(entity, fit.center, fit.size, fit.rotation)
             idByEntity[entity.id] = surface.id
             return
@@ -65,6 +80,11 @@ internal class PlaneColliders(private val root: Entity) {
             existing.rotation = fit.rotation
         }
     }
+
+    /** `COLLIDERS n= active= ...` for the QA `colliders` command: which surfaces have a tap target and whether it is live. */
+    fun describe(): String =
+        "COLLIDERS n=${colliders.size} active=$active backstop=${backstop != null} planes=" +
+            colliders.values.joinToString(" ") { c -> (runCatching { c.entity.getName() }.getOrNull() ?: "?") + ":" + c.entity.enabled }
 
     fun remove(id: String) {
         val c = colliders.remove(id) ?: return

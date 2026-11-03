@@ -80,6 +80,20 @@ class DeskViewModel(
 
     fun onEvent(event: DeskEvent) {
         val now = SystemClock.elapsedRealtime()
+        // panel controls log `UI <name>` (the QA's sign that a press reached the panel)
+        when (event) {
+            DeskEvent.PrimaryClicked -> DeskLog.i("UI primary phase=${s.phase}")
+            DeskEvent.SecondaryClicked -> DeskLog.i("UI secondary phase=${s.phase}")
+            DeskEvent.BackClicked -> DeskLog.i("UI back phase=${s.phase}")
+            DeskEvent.MoreClicked -> DeskLog.i("UI more open=${!s.menuOpen}")
+            DeskEvent.RestartClicked -> DeskLog.i("UI menu_restart")
+            DeskEvent.ExitClicked -> DeskLog.i("UI menu_exit")
+            DeskEvent.BlockedRetryClicked -> DeskLog.i("UI blocked_retry")
+            DeskEvent.BlockedExitClicked -> DeskLog.i("UI blocked_exit")
+            is DeskEvent.LanguageSelected -> DeskLog.i("UI lang_${event.language.tag}")
+            is DeskEvent.UnitSelected -> DeskLog.i("UI unit_${event.unit.tag}")
+            else -> Unit
+        }
         when (event) {
             DeskEvent.SceneReady -> onSceneReady(now)
             is DeskEvent.PlanesChanged -> onPlanes(event, now)
@@ -127,10 +141,10 @@ class DeskViewModel(
     fun onFrame(now: Long) {
         val st = s
         // snackbar timeout
+        if (st.hold) return
         st.snack?.let { snack ->
             if (snack.kind.durationMs != SnackKind.STICKY && now - snack.shownAtMs > snack.kind.durationMs) set { it.copy(snack = null) }
         }
-        if (st.hold) return
         when (st.phase) {
             Phase.SCANNING -> {
                 if (st.floorY == null) {
