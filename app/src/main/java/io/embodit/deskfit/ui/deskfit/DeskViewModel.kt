@@ -463,6 +463,8 @@ class DeskViewModel(
         val desk = s.desk ?: DeskPick(null, floorY + 0.74f, DeskEdge(Vec3(-0.6f, floorY + 0.74f, -0.5f), Vec3(0.6f, floorY + 0.74f, -0.5f), Vec3.AHEAD), emptyList())
         fun withEye(): DeskUiState = s.copy(eyeH = s.eyeH ?: 1.18f, headXZ = s.headXZ ?: Vec3(0f, 0f, 0f), headFwd = s.headFwd ?: Vec3.AHEAD, desk = desk, floorY = floorY)
         fun withPole(st: DeskUiState): DeskUiState = st.copy(pole = st.pole ?: (st.headXZ ?: Vec3.ZERO).let { h -> Vec3(h.x, desk.topY, h.z - 0.7f) }, barY = if (st.pole == null) desk.topY + 0.45f else st.barY)
+        // a jump leaves the scanning / lost snackbars behind unless the target state owns one
+        if (id.uppercase(Locale.US) !in setOf("S2", "S12", "S15")) set { it.copy(snack = null) }
         when (id.uppercase(Locale.US)) {
             "S1" -> set { it.copy(phase = Phase.STARTING, menuOpen = false, blocked = null) }
             "S2" -> {

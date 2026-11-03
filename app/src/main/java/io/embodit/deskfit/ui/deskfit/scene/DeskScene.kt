@@ -1251,7 +1251,7 @@ internal class PoleView(parent: Entity, name: String, private val meshes: Meshes
     private val tickR = ModelEntity(meshes.tick, materials.eyeTick)
     private val faintL = ModelEntity(meshes.tick, materials.eyeTickFaint)
     private val faintR = ModelEntity(meshes.tick, materials.eyeTickFaint)
-    private val tape = Tape(root, "${name}_tape", materials, tapes)
+    private val tape = Tape(parent, "${name}_tape", materials, tapes)
     private var on = false
     private var ghost = false
     private var footY = 0f
@@ -1360,6 +1360,7 @@ internal class PoleView(parent: Entity, name: String, private val meshes: Meshes
     }
 
     fun hide() {
+        tape.hide()
         if (on) {
             root.enabled = false
             on = false
@@ -1386,7 +1387,7 @@ internal class ForearmView(parent: Entity, meshes: PoleView.Meshes, private val 
     private val bar = ModelEntity(meshes.plateEdge, materials.yellow)
     private val edge = ModelEntity(meshes.plateEdge, materials.edge)
     private val touch: Entity
-    private val tape = Tape(root, "forearm_tape", materials, tapes)
+    private val tape = Tape(parent, "forearm_tape", materials, tapes)
     private var on = false
     private var rotation = Quat4.IDENTITY
     private var plateAt = Vec3.ZERO
@@ -1435,6 +1436,7 @@ internal class ForearmView(parent: Entity, meshes: PoleView.Meshes, private val 
     }
 
     fun hide() {
+        tape.hide()
         if (on) {
             root.enabled = false
             on = false
