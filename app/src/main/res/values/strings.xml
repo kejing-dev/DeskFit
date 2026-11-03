@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- English (default). Figures and unit symbols are the same in both languages. Copy from the design package (`copy`, `steps`, `panels`). -->
+<resources>
+    <string name="app_name">Desk Fit</string>
+
+    <!-- step dots (descriptions) -->
+    <string name="step_sit">Sit</string>
+    <string name="step_screen">Screen</string>
+    <string name="step_arm">Arm</string>
+    <string name="step_result">Result</string>
+
+    <!-- step copy -->
+    <string name="copy_starting">Getting ready…</string>
+    <string name="copy_scanning">Look at your desk</string>
+    <string name="copy_sit">Sit as you type</string>
+    <string name="hint_sit">Sit like you usually type</string>
+    <string name="copy_sampling">Hold still</string>
+    <string name="copy_eye_locked">Eye %1$s</string>
+    <string name="copy_mark_screen">Tap desk under screen</string>
+    <string name="copy_align_top">Drag bar to screen top</string>
+    <string name="hint_align_top">Nod a little — still on the edge? Good</string>
+    <string name="hint_joystick">Thumbstick left / right turns it</string>
+    <string name="copy_forearm">Arm level — bar matches?</string>
+    <string name="hint_forearm">If not, drag it with the other hand</string>
+    <string name="copy_manual_a">Drag panel to desk</string>
+    <string name="copy_manual_b">Tap the desk edge</string>
+    <string name="copy_posture_standing">Eye %1$s, standing?</string>
+    <string name="copy_posture_low">Desk seems high</string>
+    <string name="copy_last">Last %1$s: %2$s</string>
+    <string name="summary_chair">Chair</string>
+    <string name="summary_screen">Screen</string>
+    <string name="summary_distance">Distance</string>
+    <string name="summary_ok">OK</string>
+
+    <!-- buttons -->
+    <string name="action_ready">Ready</string>
+    <string name="action_done">Done</string>
+    <string name="action_next">Next</string>
+    <string name="action_again">Measure again</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_keep">Keep</string>
+    <string name="action_continue">Continue</string>
+    <string name="action_wrong_desk">Wrong desk</string>
+    <string name="action_back">Back</string>
+    <string name="action_more">More</string>
+    <string name="action_exit">Exit</string>
+    <string name="action_restart">Start over</string>
+
+    <!-- result -->
+    <string name="result_header">Chair first, then screen</string>
+    <string name="result_all_good">All set</string>
+    <string name="row_chair">Chair</string>
+    <string name="row_height">Screen height</string>
+    <string name="row_distance">Screen distance</string>
+    <string name="row_side">Center the screen</string>
+    <string name="verdict_ok">OK</string>
+    <string name="verdict_push">Push back %1$s</string>
+    <string name="verdict_pull">Bring closer %1$s</string>
+    <string name="note_footrest">Add a footrest</string>
+    <string name="note_tray">Try a keyboard tray</string>
+    <string name="note_low_desk">Desk is low</string>
+    <string name="note_after_chair">After chair change</string>
+    <string name="note_laptop">Laptop: stand + keyboard</string>
+    <string name="result_footer">Eye %1$s · Desk %2$s · Arm %3$s</string>
+
+    <!-- more menu -->
+    <string name="lang_system">System default</string>
+    <string name="lang_zh" translatable="false">中文</string>
+    <string name="lang_en">English</string>
+    <string name="lang_en_short" translatable="false">EN</string>
+    <string name="unit_cm" translatable="false">cm</string>
+    <string name="unit_in" translatable="false">in</string>
+
+    <!-- snackbars -->
+    <string name="snack_scanning">Look at your desk</string>
+    <string name="snack_no_desk">Desk not found</string>
+    <string name="snack_tap_desk">Tap the desk</string>
+    <string name="snack_tap_under">Tap under the screen</string>
+    <string name="snack_unstable">Hold still, try again</string>
+    <string name="snack_lost">Tracking lost · look around</string>
+    <string name="snack_no_floor">Look at the floor</string>
+
+    <!-- unavailable dialog -->
+    <string name="dialog_blocked_title">Spatial features unavailable</string>
+    <string name="dialog_blocked_body">Allow plane detection in Settings.</string>
+
+    <!-- descriptions of plate glyphs -->
+    <string name="desc_eye">Eye height</string>
+    <string name="desc_up">Raise</string>
+    <string name="desc_down">Lower</string>
+    <string name="desc_push">Push back</string>
+    <string name="desc_pull">Bring closer</string>
+    <string name="desc_center">Center</string>
+    <string name="desc_chair">Chair</string>
+</resources>

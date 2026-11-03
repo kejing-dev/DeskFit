@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 简体中文。文案来自设计包（copy / steps / panels）。 -->
+<resources>
+    <string name="app_name">工位校准</string>
+
+    <string name="step_sit">坐好</string>
+    <string name="step_screen">屏幕</string>
+    <string name="step_arm">前臂</string>
+    <string name="step_result">结果</string>
+
+    <string name="copy_starting">正在准备…</string>
+    <string name="copy_scanning">低头看看桌面</string>
+    <string name="copy_sit">坐好，看前方</string>
+    <string name="hint_sit">像平时打字那样坐</string>
+    <string name="copy_sampling">别动</string>
+    <string name="copy_eye_locked">眼高 %1$s</string>
+    <string name="copy_mark_screen">点屏幕正下方的桌面</string>
+    <string name="copy_align_top">黄条拖到屏幕上沿</string>
+    <string name="hint_align_top">晃晃头，黄条还贴着就对了</string>
+    <string name="hint_joystick">摇杆左右转动</string>
+    <string name="copy_forearm">这只手端平，看黄条齐不齐</string>
+    <string name="hint_forearm">不齐就用另一只手拖</string>
+    <string name="copy_manual_a">把板子拖到桌面高</string>
+    <string name="copy_manual_b">点一下桌沿</string>
+    <string name="copy_posture_standing">眼高 %1$s，像是站着</string>
+    <string name="copy_posture_low">桌子偏高</string>
+    <string name="copy_last">上次 %1$s：%2$s</string>
+    <string name="summary_chair">椅</string>
+    <string name="summary_screen">屏</string>
+    <string name="summary_distance">距离</string>
+    <string name="summary_ok">合适</string>
+
+    <string name="action_ready">坐好了</string>
+    <string name="action_done">对好了</string>
+    <string name="action_next">下一步</string>
+    <string name="action_again">再量一次</string>
+    <string name="action_retry">重量</string>
+    <string name="action_keep">就是这样</string>
+    <string name="action_continue">继续</string>
+    <string name="action_wrong_desk">桌子不对</string>
+    <string name="action_back">返回</string>
+    <string name="action_more">更多</string>
+    <string name="action_exit">退出</string>
+    <string name="action_restart">重新开始</string>
+
+    <string name="result_header">先调椅子，再调屏幕</string>
+    <string name="result_all_good">都合适了</string>
+    <string name="row_chair">椅子</string>
+    <string name="row_height">屏幕高度</string>
+    <string name="row_distance">屏幕距离</string>
+    <string name="row_side">摆到正前方</string>
+    <string name="verdict_ok">合适</string>
+    <string name="verdict_push">推远 %1$s</string>
+    <string name="verdict_pull">拉近 %1$s</string>
+    <string name="note_footrest">脚踩不实加脚踏</string>
+    <string name="note_tray">试试键盘托</string>
+    <string name="note_low_desk">桌子偏矮</string>
+    <string name="note_after_chair">按调完椅子后</string>
+    <string name="note_laptop">笔记本：支架 + 外接键盘</string>
+    <string name="result_footer">眼高 %1$s · 桌面 %2$s · 前臂 %3$s</string>
+
+    <string name="lang_system">跟随系统</string>
+    <string name="lang_en">英文</string>
+
+    <string name="snack_scanning">低头看看桌面</string>
+    <string name="snack_no_desk">没认出桌面</string>
+    <string name="snack_tap_desk">点在桌面上</string>
+    <string name="snack_tap_under">点在屏幕下方</string>
+    <string name="snack_unstable">别动，再来一次</string>
+    <string name="snack_lost">定位丢失 · 环顾四周</string>
+    <string name="snack_no_floor">低头看看地面</string>
+
+    <string name="dialog_blocked_title">空间能力不可用</string>
+    <string name="dialog_blocked_body">请在系统设置中允许平面识别。</string>
+
+    <string name="desc_eye">眼高</string>
+    <string name="desc_up">升高</string>
+    <string name="desc_down">降低</string>
+    <string name="desc_push">推远</string>
+    <string name="desc_pull">拉近</string>
+    <string name="desc_center">摆到正前方</string>
+    <string name="desc_chair">椅子</string>
+</resources>

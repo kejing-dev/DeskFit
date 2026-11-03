@@ -1,0 +1,145 @@
+{
+  "agentHosts": {
+    "claude-code": {
+      "platform": "spatial",
+      "pluginName": "pico-spatial-agentic-tools",
+      "pluginVersion": "0.6.1",
+      "plugins": [
+        {
+          "name": "pico-spatial-agentic-tools",
+          "version": "0.6.1"
+        },
+        {
+          "name": "pico-general-agentic-tools",
+          "version": "0.1.1"
+        }
+      ],
+      "sourcePath": "/Users/bytedance/.pico-cli/cache/PICO-Intelligent-Plugins",
+      "resources": {
+        "skills": [
+          "knowledge-query",
+          "pico-cli",
+          "pico-cli-device-target",
+          "pico-cli-screenshot",
+          "pico-env-doctor",
+          "pico-spatial-app-designer",
+          "porting-android-app",
+          "spatial-app-dev-workflow",
+          "spatial-app-onboarding",
+          "spatial-app-performance-analysis",
+          "spatial-design-to-app",
+          "spatial-editor",
+          "spatial-emulator-usage",
+          "spatial-sdk-guideline",
+          "spatial-sdk-scene-builder",
+          "spatial-sdk-update",
+          "spatial-ui-ability",
+          "spatial-ui-design-style",
+          "spatialml",
+          "spatialml-debugging"
+        ],
+        "mcpServers": [
+          "pico-dev-knowledge",
+          "pico-spatial-editor"
+        ],
+        "managedFiles": [
+          {
+            "kind": "hook-file",
+            "path": ".claude/hooks/pico-general-agentic-tools/catalog.json",
+            "sha256": "ebba4d3473759b54619f165f80692103ce98e6eb028c78088b05c63e2f8fc825"
+          },
+          {
+            "kind": "hook-file",
+            "path": ".claude/hooks/pico-general-agentic-tools/ingest.mjs",
+            "sha256": "2f52b150b05237f089181de64a63544d4d3d444d12a480adf0fed1b0e10605f8"
+          },
+          {
+            "kind": "hook-file",
+            "path": ".claude/hooks/pico-general-agentic-tools/runtime.mjs",
+            "sha256": "f68c96b4dd6771ce3c536f6f14f31d1560e42753e6b9beda6c3629f2676748c9"
+          },
+          {
+            "kind": "hook-file",
+            "path": ".claude/hooks/pico-spatial-agentic-tools/agent-hook-process-lifecycle.mjs",
+            "sha256": "f93c75386217c369b32d6166117e767355669d6de5c545bfe5553f955aa1d4be"
+          },
+          {
+            "kind": "hook-file",
+            "path": ".claude/hooks/pico-spatial-agentic-tools/capture-context.mjs",
+            "sha256": "b91d26e40523d842c6d0bbc46b18e2018834206b903e4d9eecab054769bc35d1"
+          }
+        ],
+        "hookDocuments": [
+          {
+            "path": ".claude/settings.json",
+            "existedBefore": false,
+            "entries": [
+              {
+                "event": "PostToolUseFailure",
+                "pluginName": "pico-general-agentic-tools",
+                "sha256": "67e4be9c87b8e6b55181bde1397be81435c74a85690a2a5af8f7c933f998be6e",
+                "value": {
+                  "matcher": "^mcp__pico-(?:dev-knowledge|spatial-editor)__",
+                  "hooks": [
+                    {
+                      "type": "command",
+                      "command": "node \"/Users/bytedance/Desktop/Spatial Apps/desk-fit/.claude/hooks/pico-general-agentic-tools/ingest.mjs\"",
+                      "timeout": 65
+                    }
+                  ]
+                }
+              },
+              {
+                "event": "PostToolUse",
+                "pluginName": "pico-general-agentic-tools",
+                "sha256": "e317d868aae0fc522894dec35f2331d340e77b1a980c7eb957d6c8475c5579c5",
+                "value": {
+                  "matcher": "^(Skill|Read|mcp__pico-(?:dev-knowledge|spatial-editor)__)",
+                  "hooks": [
+                    {
+                      "type": "command",
+                      "command": "node \"/Users/bytedance/Desktop/Spatial Apps/desk-fit/.claude/hooks/pico-general-agentic-tools/ingest.mjs\"",
+                      "timeout": 65
+                    }
+                  ]
+                }
+              },
+              {
+                "event": "PreToolUse",
+                "pluginName": "pico-spatial-agentic-tools",
+                "sha256": "afb1b3088b5a42d8ab8e0801bcaed3a1c0421ab6bdc0db0a62e20df84e76b745",
+                "value": {
+                  "matcher": "^(?:Bash|exec_command|shell_command|(?:mcp__(?:pico-spatial-editor|pico_spatial_editor)__)?(?:start_editor_workflow|start_3d_generation_workflow))$",
+                  "hooks": [
+                    {
+                      "type": "command",
+                      "command": "node \"/Users/bytedance/Desktop/Spatial Apps/desk-fit/.claude/hooks/pico-spatial-agentic-tools/capture-context.mjs\" claude-code",
+                      "timeout": 10
+                    }
+                  ]
+                }
+              },
+              {
+                "event": "UserPromptExpansion",
+                "pluginName": "pico-general-agentic-tools",
+                "sha256": "4eee60d187de3acf4418be602ef30b9bafd0fe3daa09ff1285c0cfcc083934b1",
+                "value": {
+                  "hooks": [
+                    {
+                      "type": "command",
+                      "command": "node \"/Users/bytedance/Desktop/Spatial Apps/desk-fit/.claude/hooks/pico-general-agentic-tools/ingest.mjs\"",
+                      "timeout": 65
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "agentVaultWorkspace": "6.1/agent-vault/spatial",
+  "version": "6.1",
+  "platform": "spatial"
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- monitor: rounded rectangle + short stand; its top edge is at y = 42 -->
+    <path
+        android:pathData="M40,42H78a3,3 0,0 1,3 3V66a3,3 0,0 1,-3 3H40a3,3 0,0 1,-3 -3V45a3,3 0,0 1,3 -3Z"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000" />
+    <path
+        android:pathData="M59,69V76M51,76H67"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
+    <!-- the eye -->
+    <path
+        android:pathData="M24,42m-4.5,0a4.5,4.5 0,1 1,9 0a4.5,4.5 0,1 1,-9 0"
+        android:fillColor="#FFFFFFFF" />
+    <!-- dashed sight line from the eye, grazing the monitor's top edge (same y) -->
+    <path
+        android:pathData="M31,42H36 M40,42H45 M49,42H54 M58,42H63 M67,42H72 M76,42H81"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
+    <!-- small up arrow to the right of the monitor -->
+    <path
+        android:pathData="M90,66V52M85,57L90,52L95,57"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="3.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000" />
+</vector>
